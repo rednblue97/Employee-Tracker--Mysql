@@ -11,7 +11,7 @@ VALUES  ("Sales Lead", 100000, 1),
         ("Lawyer", 160000, 4);
 
 INSERT INTO employee (first_name,last_name,role_id,manager_id)
-VALUES  ("Kobe","Bryant",1,)
-        ("LeBron","James",2)
-        ("Steve","Jobs",3)
-        ("Magic","Johnson",4);    
+VALUES  ("Kobe","Bryant",1, NULL),
+        ("LeBron","James",2,1),
+        ("Steve","Jobs",3,2),
+        ("Magic","Johnson",4,3);    
