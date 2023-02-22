@@ -72,22 +72,117 @@ function startApp() {
         } 
     })   
 }
+    let addEmployees = () => {
+        return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "first_name",
+                message: "Please enter the employee's first name below."
+            },
+            {
+                type: "input",
+                name: "last_name",
+                message: "Please enter the employee's last name below."
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "Please enter the employee's salary below."
+            },
+            {
+                type: "input",
+                name: "role_id",
+                message: "Please enter the employee role ID below."
+            },
+            {
+                type:"input",
+                name: "manager_id",
+                message: "Please enter the manager Id for employee below."
+            },
+        ])
+        .then(function(responses) {
+            db.query("INSERT INTO employee SET ?",
+            { first_name: responses.first_name, last_name: responses.last_name, salary: responses.salary, role_id: responses.role_id, manager_id: responses.manager_id},
+            function(err) {
+                if (err) throw err;
+                startApp();
+            })
+        })
+    }
 
-function viewAllEmployees() {
-    db.query(`SELECT * FROM employee`, (err,rows) => {
-        if (err)throw err
-        console.table(rows)
-        startApp();
-    })
+    let viewAllEmployees = () => {
+        db.query(`SELECT * FROM employee`, (err,rows) => {
+            if (err)throw err
+            console.table(rows)
+            startApp();
+        })
 }
-    function viewAllDepartments() {
+    let viewAllDepartments = () => {
         db.query(`SELECT * FROM department`, (err,rows) => {
             if (err)throw err
             console.table(rows)
             startApp();
         })
-    
 }
-
-
-
+    let viewAllRoles = () => {
+        db.query(`SELECT * FROM role`, (err,rows) => {
+            if (err)throw err
+            console.table(rows)
+            startApp();
+        })
+}
+    let addDepartment = () => {
+        return inquirer
+        .prompt([
+            {
+                type: "input",
+                name:"id",
+                message: "Enter Id below."
+            },
+            {
+                type: "input",
+                name: "name",
+                message:"Please enter the new department below."
+            }
+        ])
+        .then(function(responses) {
+            db.query(
+                "INSERT INTO department SET ?",
+                { id: responses.id, name: responses.name},
+                function(err) {
+                    if (err) throw err;
+                    startApp();   
+                })
+            }) 
+}
+    let addRole = () => {
+        return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "title",
+                message: "Please enter role name.",
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "PLease enter salary below.",
+            },
+            {
+                type: "input",
+                name: "department_id",
+                message: "Please enter ID below."
+            }
+        ])
+        .then(function(responses) {
+            db.query(
+                "INSERT INTO role SET ?",
+                { title: responses.title, salary: responses.salary, department_id: responses.department_id},
+                function(err) {
+                    if (err) throw err;
+                    startApp();
+                }
+            )
+        })
+    }
