@@ -1,3 +1,4 @@
+-- Insert values that will later be used when making new departments,roles, and employees
 INSERT INTO department(name,id)
 VALUES  ("Sales",25),
         ("Engineering",30),

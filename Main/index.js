@@ -1,8 +1,9 @@
-// const express = require('express');
+//Packages needed for application
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 require ('console.table');
 
+//Starts the port
 const PORT = process.env.PORT || 3001;
 const express = require('express');
 const app = express();
@@ -10,16 +11,19 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+//Connects to the database we created 
 const db = mysql.createConnection(
     {
         host: 'localhost',
         user:'root',
+        // User password for mysql goes below
         password:'',
         database:'employee_db'
     },
     console.log(`Connected to the employee_db database.`)
 )
 
+//Succesful connection, error if otherwise
 db.connect(err => {
     if(err) throw err;
     console.log("DB connected!")
@@ -29,7 +33,7 @@ db.connect(err => {
     })
 })
 
-
+//Starts the inquirer,menu to select 
 function startApp() {
     inquirer
     .prompt(
@@ -48,6 +52,7 @@ function startApp() {
             ],
         }
     ])
+    //If the user selects any one of these then they will be directed
     .then(response => {
         let options = response.departmentList;
         if (options === "View All Employees") {
@@ -73,6 +78,7 @@ function startApp() {
         } 
     })   
 }
+    // prompts for adding a new employee
     let addEmployees = () => {
         return inquirer
         .prompt([
@@ -102,6 +108,7 @@ function startApp() {
                 message: "Please enter the manager Id for employee below."
             },
         ])
+        // Inserts the new information into the employee table, returns to the main menu
         .then(function(responses) {
             db.query("INSERT INTO employee SET ?",
             { first_name: responses.first_name, last_name: responses.last_name, salary: responses.salary, role_id: responses.role_id, manager_id: responses.manager_id},
@@ -111,7 +118,7 @@ function startApp() {
             })
         })
     }
-
+    // Prompts for updating a current employee
     let updatedEmployeeRole = () => {
         return inquirer
         .prompt([
@@ -131,6 +138,7 @@ function startApp() {
                 message: "Please enter the new role ID for the employee below."   
             },
         ])
+        // Inserts the role id and updates the first and last name
         .then(function(responses) {
             db.query('UPDATE employee SET ?',
             { first_name: responses.first_name, last_name:responses.last_name, role_id: responses.role_id},
@@ -141,7 +149,7 @@ function startApp() {
             )
         })
     }
-
+    // Grabs the employee table from the database and displays it
     let viewAllEmployees = () => {
         db.query(`SELECT * FROM employee`, (err,rows) => {
             if (err)throw err
@@ -149,6 +157,7 @@ function startApp() {
             startApp();
         })
 }
+    // Grabs the department table from the database and displays it
     let viewAllDepartments = () => {
         db.query(`SELECT * FROM department`, (err,rows) => {
             if (err)throw err
@@ -156,6 +165,7 @@ function startApp() {
             startApp();
         })
 }
+    // Grabs the role table from the database and displays it
     let viewAllRoles = () => {
         db.query(`SELECT * FROM role`, (err,rows) => {
             if (err)throw err
@@ -163,6 +173,7 @@ function startApp() {
             startApp();
         })
 }
+    // Prompts to add a new department
     let addDepartment = () => {
         return inquirer
         .prompt([
@@ -177,6 +188,7 @@ function startApp() {
                 message:"Please enter the new department below."
             }
         ])
+        // Inserts the new department into the department table
         .then(function(responses) {
             db.query(
                 "INSERT INTO department SET ?",
@@ -187,6 +199,7 @@ function startApp() {
                 })
             }) 
 }
+    // Prompts to create a new role
     let addRole = () => {
         return inquirer
         .prompt([
@@ -206,6 +219,7 @@ function startApp() {
                 message: "Please enter ID below."
             }
         ])
+        // Gets the new information, adds it into the role table
         .then(function(responses) {
             db.query(
                 "INSERT INTO role SET ?",

@@ -1,3 +1,4 @@
+-- Creating the database removing database if exists
 DROP DATABASE IF EXISTS employee_DB;
 CREATE DATABASE employee_DB;
 
@@ -6,8 +7,10 @@ DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS employee;
 
+-- Using the database we created
 USE employee_DB;
 
+-- Creating tables for department, role, and employee
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL
