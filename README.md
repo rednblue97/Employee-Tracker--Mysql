@@ -20,7 +20,8 @@ The user can download the application that will run in the backend.
 
 ## Usage
 This application is used to view employees,add employees,update employees,view roles,add roles,view departments, and add departments. This can be useful when manageing a team of employees and their respective id's, salaries, and departments.
-[Mod12Vid_ Feb 22, 2023 2_41 PM.webm](https://user-images.githubusercontent.com/114364879/220766203-5dc75676-5bb9-4c24-8da7-554d2ed2ad2e.webm)
+
+https://user-images.githubusercontent.com/114364879/220766203-5dc75676-5bb9-4c24-8da7-554d2ed2ad2e.webm
 
 
 ## License
