@@ -111,6 +111,36 @@ function startApp() {
         })
     }
 
+    let updatedEmployeeRole = () => {
+        return inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "first_name",
+                message: "Please enter the employee's first name below.",
+            },
+            {
+                type: "input",
+                name: "last_name",
+                message: "Please enter the employee's last name below."
+            },
+            {
+                type: "input",
+                name: "role_id",
+                message: "Please enter the new role ID for the employee below."   
+            },
+        ])
+        .then(function(responses) {
+            db.query('UPDATE employee SET ?',
+            { first_name: responses.first_name, last_name:responses.last_name, role_id: responses.role_id},
+            function(err) {
+                if (err) throw err;
+                startApp();
+            }
+            )
+        })
+    }
+
     let viewAllEmployees = () => {
         db.query(`SELECT * FROM employee`, (err,rows) => {
             if (err)throw err
