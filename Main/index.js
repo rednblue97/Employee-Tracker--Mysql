@@ -17,7 +17,7 @@ const db = mysql.createConnection(
         host: 'localhost',
         user:'root',
         // User password for mysql goes below
-        password:'',
+        password:'Your mysql password will go here',
         database:'employee_db'
     },
     console.log(`Connected to the employee_db database.`)
@@ -44,7 +44,6 @@ function startApp() {
             choices:[
                 "View All Employees",
                 "Add Employees",
-                "Update Employee Role",
                 "View All Roles",
                 "Add Role",
                 "View All Departments",
@@ -60,9 +59,6 @@ function startApp() {
         };
         if (options === "Add Employees") {
             addEmployees();
-        }
-        if (options === "Update Employee Role") {
-            updatedEmployeeRole();
         }
         if (options === "View All Roles") {
             viewAllRoles();
@@ -114,39 +110,9 @@ function startApp() {
             { first_name: responses.first_name, last_name: responses.last_name, salary: responses.salary, role_id: responses.role_id, manager_id: responses.manager_id},
             function(err) {
                 if (err) throw err;
+                console.log("Successfuly added a new employee!")
                 startApp();
             })
-        })
-    }
-    // Prompts for updating a current employee
-    let updatedEmployeeRole = () => {
-        return inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "first_name",
-                message: "Please enter the employee's first name below.",
-            },
-            {
-                type: "input",
-                name: "last_name",
-                message: "Please enter the employee's last name below."
-            },
-            {
-                type: "input",
-                name: "role_id",
-                message: "Please enter the new role ID for the employee below."   
-            },
-        ])
-        // Inserts the role id and updates the first and last name
-        .then(function(responses) {
-            db.query('UPDATE employee SET ?',
-            { first_name: responses.first_name, last_name:responses.last_name, role_id: responses.role_id},
-            function(err) {
-                if (err) throw err;
-                startApp();
-            }
-            )
         })
     }
     // Grabs the employee table from the database and displays it
@@ -154,6 +120,7 @@ function startApp() {
         db.query(`SELECT * FROM employee`, (err,rows) => {
             if (err)throw err
             console.table(rows)
+            console.log("Viewing all Employees!")
             startApp();
         })
 }
@@ -162,6 +129,7 @@ function startApp() {
         db.query(`SELECT * FROM department`, (err,rows) => {
             if (err)throw err
             console.table(rows)
+            console.log("Viewing all Departments!")
             startApp();
         })
 }
@@ -170,6 +138,7 @@ function startApp() {
         db.query(`SELECT * FROM role`, (err,rows) => {
             if (err)throw err
             console.table(rows)
+            console.log("Viewing all Roles!")
             startApp();
         })
 }
@@ -195,6 +164,7 @@ function startApp() {
                 { id: responses.id, name: responses.name},
                 function(err) {
                     if (err) throw err;
+                    console.log("Succesfully added a new department!")
                     startApp();   
                 })
             }) 
@@ -226,6 +196,7 @@ function startApp() {
                 { title: responses.title, salary: responses.salary, department_id: responses.department_id},
                 function(err) {
                     if (err) throw err;
+                    console.log("Successuly added a new role!")
                     startApp();
                 }
             )
