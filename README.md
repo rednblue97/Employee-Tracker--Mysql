@@ -37,7 +37,6 @@ The user can test this application by logging into Mysql in the terminal, runnin
 
 
 ## GitHub 
-CaptureB
-
+rednblue97
 ## Email
-
+probablydavidgarcia97@gmail.com
